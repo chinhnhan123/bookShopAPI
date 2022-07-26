@@ -1,7 +1,9 @@
 const BookServices = require("../services/BookServices");
 
 const getAllBooks = async (req, res) => {
-  const books = await BookServices.getAllBooks();
+  const { page = 1, limit = 5 } = req.query;
+  const options = { page, limit };
+  const books = await BookServices.getAllBooks(options);
   res.send(books);
 };
 
@@ -29,7 +31,7 @@ const deleteBook = async (req, res) => {
     console.log(req.params.id);
     const deletebook = await BookServices.deleteBook(req.params.id);
     if (!deletebook) return res.sendStatus(500);
-    return res.status(200).send(deletebook);
+    return res.status(200).send("deletebook successful!!!!!");
   } catch (error) {
     console.log(error);
   }
@@ -40,8 +42,7 @@ const updateBook = async (req, res) => {
     if (!req.params.id) return res.sendStatus(400);
     if (!req.body) return res.sendStatus(400);
     const updateBook = await BookServices.updateBook(req.params.id, req.body);
-    console.log(updateBook);
-    return res.status(200).send(updateBook);
+    return res.status(200).send("updateBook successful");
   } catch (error) {
     console.log(error);
   }

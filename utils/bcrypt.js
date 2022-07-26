@@ -1,12 +1,15 @@
+const result = require("dotenv").config();
+// console.log("alo", result);
+// console.log(typeof process.env.SALT);
 const bcrypt = require("bcrypt");
-require("dotenv").config();
 
 const hashPassword = async (plainPassword) => {
   try {
-    const hashed = await bcrypt.hash(plainPassword, 8);
+    const hashed = await bcrypt.hash(plainPassword, parseInt(process.env.SALT));
+
     return hashed;
   } catch (error) {
-    console.error(error);
+    console.log("🚀 ~ file: bcrypt.js ~ line 13 ~ hashPassword ~ error", error);
     return error;
   }
 };

@@ -23,10 +23,11 @@ const login = async (req, res) => {
     if (!findUser) return res.status(400).send("User does not exists");
 
     const checkPassword = await UserServices.checkPassword(email, password);
-    if (!checkPassword) return res.status(400).send("incorrect password");
+    if (!checkPassword) return res.status(401).send("incorrect password");
 
     const token = await UserServices.createToken(req.body);
-    return res.status(200).send({ token, findUser });
+    res.cookie("access_token", token, { httpOnly: true });
+    return res.status(200).send("login successful !!!!!");
   } catch (error) {
     console.log(error);
   }

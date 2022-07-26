@@ -1,8 +1,8 @@
 const BookModel = require("../database/model/Book");
 
-const findAllBooks = async () => {
+const findAllBooks = async (options) => {
   try {
-    const books = await BookModel.find({});
+    const books = await BookModel.paginate({}, options);
     console.log(books);
     return books;
   } catch (error) {

@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const BookController = require("../../controller/BookController");
+const { canDeleteBook } = require("../../permissions/book");
 /**
  * @swagger
  * /api/books:
@@ -32,11 +33,11 @@ const BookController = require("../../controller/BookController");
  *                     example: 199999
  */
 
-router.get("/books", BookController.getAllBooks);
+router.get("/", BookController.getAllBooks);
 
 /**
  * @swagger
- * /api/book/{id}:
+ * /api/books/book/{id}:
  *   get:
  *     tags:
  *        - Book
@@ -101,11 +102,11 @@ router.get("/book/:id", BookController.getBook);
  *         description: Create books.
  */
 
-router.post("/books", BookController.createBook);
+router.post("/", BookController.createBook);
 
 /**
  * @swagger
- * /api/deleteBook/{Id}:
+ * /api/books/deleteBook/{id}:
  *  delete:
  *      tags:
  *         - Book
@@ -127,7 +128,7 @@ router.delete("/deleteBook/:id", BookController.deleteBook);
 
 /**
  * @swagger
- * /api/updateBook/{id}:
+ * /api/books/updateBook/{id}:
  *   put:
  *     tags:
  *        - Book

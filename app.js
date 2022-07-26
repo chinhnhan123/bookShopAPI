@@ -1,6 +1,10 @@
-require("dotenv").config();
-var express = require("express");
 var path = require("path");
+// console.log(require("dotenv").config());
+// console.log(
+//   require("dotenv").config({ path: path.resolve(__dirname, ".env") })
+// );
+// console.log(path.resolve(__dirname, ".env"));
+var express = require("express");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const database = require("./database/connect");
@@ -12,6 +16,8 @@ var usersRouter = require("./routes/users");
 const booksRouter = require("./routes/api/book");
 const authRouter = require("./routes/api/auth");
 
+const { isLoggedIn } = require("./middlewares/AuthMiddleWare");
+
 var app = express();
 
 app.use(logger("dev"));
@@ -22,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/api", booksRouter);
+app.use("/api/books", booksRouter);
 app.use("/auth", authRouter);
 
 (async () => {
